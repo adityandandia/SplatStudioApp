@@ -1,0 +1,6 @@
+{
+  "name": "SplatStudio",
+  "description": "Convert recorded videos to interactive 3D Gaussian Splats with dynamic local/tunnel node processing pipelines.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
