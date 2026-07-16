@@ -2,7 +2,7 @@
 
 Android app for capturing a scene and viewing it back as a 3D Gaussian Splat.
 This is the client-side counterpart to the
-[3dReConstruct](https://github.com/adityandandia/3dReConstruct) backend
+[GaussCraft](https://github.com/adityandandia/GaussCraft) backend
 pipeline.
 
 ![platform](https://img.shields.io/badge/platform-Android-3DDC84)
@@ -30,7 +30,7 @@ pipeline.
 
 Point your phone at something, record a short walk-around video, and send it
 off for reconstruction. SplatStudio handles the capture (via CameraX), talks
-to a 3dReConstruct backend to turn that video into a 3D Gaussian Splat, and
+to GaussCraft backend to turn that video into a 3D Gaussian Splat, and
 then renders the result back on-device — right inside the app, no separate
 viewer needed.
 
@@ -71,7 +71,7 @@ A2["Job Card / Status"]
 A3["WebView Viewer<br/>Three.js + Gaussian Splat Renderer"]
 end
 
-subgraph Backend["3DReConstruct Backend (FastAPI)"]
+subgraph Backend["GaussCraft Backend (FastAPI)"]
 B1["Upload Video"]
 B2["COLMAP"]
 B3["FastGS"]
@@ -91,7 +91,7 @@ B5 -->|HTTP Response| A3
 
 
 - **Capture:** CameraX records a walk-around video on-device.
-- **Upload:** video is sent to a 3dReConstruct backend instance over HTTP.
+- **Upload:** video is sent to a GaussCraft backend instance over HTTP.
 - **Reconstruction:** backend runs COLMAP for Structure-from-Motion, then
   FastGS for Gaussian Splat training, then a custom `clean_splat()` cleanup
   pass.
@@ -107,7 +107,7 @@ B5 -->|HTTP Response| A3
 - A physical Android device (see [Device Requirements](#device-requirements)) —
   splat rendering and camera capture both need a real device.
 - A running instance of the
-  [3dReConstruct](https://github.com/adityandandia/3dReConstruct) backend,
+  [GaussCraft](https://github.com/adityandandia/GaussCraft) backend,
   reachable from your device.
 
 ### Install
@@ -119,7 +119,7 @@ page and install it on your device.
 
 ## Configuration
 
-The app needs the address of a running 3dReConstruct instance. Set this in
+The app needs the address of a running GaussCraft instance. Set this in
 the app's settings screen (or via `.env` / build config, depending on how
 it's wired in your build):
 
@@ -146,7 +146,7 @@ commit it. `.gitignore` already excludes `.env`; keep it that way.
 | Job tracking | A job card view shows upload/processing status for each capture sent to the backend. |
 | In-app 3D splat viewer | View the reconstructed Gaussian Splat directly in the app via a WebView + Three.js renderer — no export needed. |
 | Custom Gaussian Splat shader | Rendering uses a custom `GaussianSplatRenderer` ShaderMaterial rather than a generic point-cloud renderer, for proper splat blending. |
-| Configurable backend endpoint | Point the app at any 3dReConstruct instance you're running, local or remote. |
+| Configurable backend endpoint | Point the app at any GaussCraft instance you're running, local or remote. |
 
 ---
 
@@ -196,36 +196,36 @@ anything else in the pipeline:
   stutter in the viewer.
 - At least a few hundred MB of free storage per capture (raw video +
   downloaded `.ply` output).
-- Wi-Fi connectivity to reach your 3dReConstruct backend (see
+- Wi-Fi connectivity to reach your GaussCraft backend (see
   [Configuration](#configuration)).
 
 ---
 
 ## Privacy & Local Servers
 
-SplatStudio talks to a 3dReConstruct backend over plain HTTP by default,
+SplatStudio talks to a GaussCraft backend over plain HTTP by default,
 which has a few implications worth being deliberate about:
 
 - **Your captured video leaves the device.** Anything you record is
   uploaded in full to whatever backend address is configured — treat that
   backend as trusted before recording anything sensitive.
 - **Local/LAN backends are not encrypted by default.** If you're running
-  3dReConstruct on a machine on your local network and pointing the app at
+  GaussCraft on a machine on your local network and pointing the app at
   its LAN IP over plain `http://`, traffic (including the uploaded video and
   the resulting `.ply`) is not encrypted in transit. Don't do this over a
   network you don't trust (e.g. public Wi-Fi).
 - **The backend has no auth by default.** Unless you've added
-  authentication to your 3dReConstruct deployment, anyone who can reach its
+  authentication to your GaussCraft deployment, anyone who can reach its
   address can upload jobs or download outputs. If you expose it beyond your
   local network (port forwarding, a tunnel, a cloud VM with a public IP),
   add authentication first.
-- **Uploaded videos and outputs persist on the backend.** 3dReConstruct
+- **Uploaded videos and outputs persist on the backend.** GaussCraft
   writes incoming videos to `uploads/` and finished splats to `outputs/` on
   the backend machine and doesn't delete them automatically — clean these up
   yourself if you don't want captures to persist indefinitely.
 - **`.env` / API keys stay local.** The `GEMINI_API_KEY` in your `.env` file
   is read locally by the app build and should never be committed to the
-  repo.- **Upload:** video is sent to a 3dReConstruct backend instance over HTTP.
+  repo.- **Upload:** video is sent to a GaussCraft backend instance over HTTP.
 - **Reconstruction:** backend runs COLMAP for Structure-from-Motion, then
   FastGS for Gaussian Splat training, then a custom `clean_splat()` cleanup
   pass.
@@ -241,7 +241,7 @@ which has a few implications worth being deliberate about:
 - A physical Android device (see [Device Requirements](#device-requirements)) —
   splat rendering and camera capture both need a real device.
 - A running instance of the
-  [3dReConstruct](https://github.com/adityandandia/3dReConstruct) backend,
+  [GaussCraft](https://github.com/adityandandia/GaussCraft) backend,
   reachable from your device.
 
 ### Install
@@ -253,7 +253,7 @@ page and install it on your device.
 
 ## Configuration
 
-The app needs the address of a running 3dReConstruct instance. Set this in
+The app needs the address of a running GaussCraft instance. Set this in
 the app's settings screen (or via `.env` / build config, depending on how
 it's wired in your build):
 
@@ -280,7 +280,7 @@ commit it. `.gitignore` already excludes `.env`; keep it that way.
 | Job tracking | A job card view shows upload/processing status for each capture sent to the backend. |
 | In-app 3D splat viewer | View the reconstructed Gaussian Splat directly in the app via a WebView + Three.js renderer — no export needed. |
 | Custom Gaussian Splat shader | Rendering uses a custom `GaussianSplatRenderer` ShaderMaterial rather than a generic point-cloud renderer, for proper splat blending. |
-| Configurable backend endpoint | Point the app at any 3dReConstruct instance you're running, local or remote. |
+| Configurable backend endpoint | Point the app at any GaussCraft instance you're running, local or remote. |
 
 ---
 
@@ -330,30 +330,30 @@ anything else in the pipeline:
   stutter in the viewer.
 - At least a few hundred MB of free storage per capture (raw video +
   downloaded `.ply` output).
-- Wi-Fi connectivity to reach your 3dReConstruct backend (see
+- Wi-Fi connectivity to reach your GaussCraft backend (see
   [Configuration](#configuration)).
 
 ---
 
 ## Privacy & Local Servers
 
-SplatStudio talks to a 3dReConstruct backend over plain HTTP by default,
+SplatStudio talks to a GaussCraft backend over plain HTTP by default,
 which has a few implications worth being deliberate about:
 
 - **Your captured video leaves the device.** Anything you record is
   uploaded in full to whatever backend address is configured — treat that
   backend as trusted before recording anything sensitive.
 - **Local/LAN backends are not encrypted by default.** If you're running
-  3dReConstruct on a machine on your local network and pointing the app at
+  GaussCraft on a machine on your local network and pointing the app at
   its LAN IP over plain `http://`, traffic (including the uploaded video and
   the resulting `.ply`) is not encrypted in transit. Don't do this over a
   network you don't trust (e.g. public Wi-Fi).
 - **The backend has no auth by default.** Unless you've added
-  authentication to your 3dReConstruct deployment, anyone who can reach its
+  authentication to your GaussCraft deployment, anyone who can reach its
   address can upload jobs or download outputs. If you expose it beyond your
   local network (port forwarding, a tunnel, a cloud VM with a public IP),
   add authentication first.
-- **Uploaded videos and outputs persist on the backend.** 3dReConstruct
+- **Uploaded videos and outputs persist on the backend.** GaussCraft
   writes incoming videos to `uploads/` and finished splats to `outputs/` on
   the backend machine and doesn't delete them automatically — clean these up
   yourself if you don't want captures to persist indefinitely.
