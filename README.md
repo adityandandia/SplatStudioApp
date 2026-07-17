@@ -1,4 +1,4 @@
-# SplatStudio
+# SplatStudioApp
 
 Android app for capturing a scene and viewing it back as a 3D Gaussian Splat.
 This is the client-side counterpart to the
@@ -29,7 +29,7 @@ pipeline.
 ## Gist
 
 Point your phone at something, record a short walk-around video, and send it
-off for reconstruction. SplatStudio handles the capture (via CameraX), talks
+off for reconstruction. SplatStudioApp handles the capture (via CameraX), talks
 to GaussCraft backend to turn that video into a 3D Gaussian Splat, and
 then renders the result back on-device — right inside the app, no separate
 viewer needed.
@@ -107,12 +107,12 @@ B5 -->|HTTP Response| A3
 - A physical Android device (see [Device Requirements](#device-requirements)) —
   splat rendering and camera capture both need a real device.
 - A running instance of the
-  [GaussCraft](https://github.com/adityandandia/GaussCraft) backend,
+  [SplatStudio](https://github.com/adityandandia/SplatStudio) backend,
   reachable from your device.
 
 ### Install
 
-Download the latest APK from the [Releases](https://github.com/adityandandia/SplatStudio/releases)
+Download the latest APK from the [Releases](https://github.com/adityandandia/SplatStudioApp/releases)
 page and install it on your device.
 
 ---
@@ -203,7 +203,7 @@ anything else in the pipeline:
 
 ## Privacy & Local Servers
 
-SplatStudio talks to a GaussCraft backend over plain HTTP by default,
+SplatStudioApp talks to a GaussCraft backend over plain HTTP by default,
 which has a few implications worth being deliberate about:
 
 - **Your captured video leaves the device.** Anything you record is
@@ -246,7 +246,7 @@ which has a few implications worth being deliberate about:
 
 ### Install
 
-Download the latest APK from the [Releases](https://github.com/adityandandia/SplatStudio/releases)
+Download the latest APK from the [Releases](https://github.com/adityandandia/SplatStudioApp/releases)
 page and install it on your device.
 
 ---
@@ -337,7 +337,7 @@ anything else in the pipeline:
 
 ## Privacy & Local Servers
 
-SplatStudio talks to a GaussCraft backend over plain HTTP by default,
+SplatStudioApp talks to a GaussCraft backend over plain HTTP by default,
 which has a few implications worth being deliberate about:
 
 - **Your captured video leaves the device.** Anything you record is
