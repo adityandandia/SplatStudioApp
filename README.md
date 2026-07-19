@@ -7,7 +7,6 @@ pipeline.
 
 ![platform](https://img.shields.io/badge/platform-Android-3DDC84)
 ![language](https://img.shields.io/badge/kotlin-Jetpack%20Compose-7F52FF)
-![status](https://img.shields.io/badge/status-in%20development-yellow)
 
 ---
 
